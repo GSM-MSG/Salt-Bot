@@ -1,4 +1,4 @@
-name: Daily Schedule Cron
+name: Clear Used Salt
 
 on:
   schedule:
