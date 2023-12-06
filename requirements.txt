@@ -1,2 +1,2 @@
-python-dotenv=1.0.0
-firebase-admin=6.3.0
+python-dotenv==1.0.0
+firebase-admin==6.3.0
