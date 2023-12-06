@@ -17,6 +17,7 @@ MSG 디스코드 서버에서 멘션하면서 🧂를 써보세요! 멘션한 �
 > 소금은 하루에 10번 뿌릴 수 있어요.
 
 <aside>
+
 💡 E.g. @장예슬 소금이 디자인 잘 쓸게요 🧂🧂🧂🧂🧂
 
 <img src="https://github.com/GSM-MSG/Salt-Bot/assets/74440939/ff8b0174-d30b-453e-9954-e2b673ff44a9" width="450" />
@@ -41,5 +42,3 @@ MSG 디스코드 서버에서 멘션하면서 🧂를 써보세요! 멘션한 �
 - 동료가 여러운 일을 마침내 해결했을 때
 - 응원의 메시지를 남기고 싶을 때
 - 도움을 받아서 고마움을 표현하고 싶을 때
-
-**Full Changelog**: https://github.com/GSM-MSG/Salt-Bot/commits/1.0.0
