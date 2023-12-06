@@ -7,8 +7,9 @@ export default {
     .setName("rank")
     .setDescription("지금까지 받은 소금을 기준으로 TOP 10을 보여드려요!"),
   async execute(interaction: ChatInputCommandInteraction) {
-    const receivedSaltRankList = await saltRepository.getReceivedSaltRankList();
+    let receivedSaltRankList = await saltRepository.getReceivedSaltRankList();
     let result = "";
+    receivedSaltRankList = receivedSaltRankList.slice(0, 10);
     receivedSaltRankList.sort((lhs, rhs) => rhs.count - lhs.count);
     receivedSaltRankList.forEach((salt, index) => {
       if (index == 0) {
