@@ -5,7 +5,7 @@ import { client } from "./discordClient";
 export const bot = new MSGSaltBot(client);
 
 const app: Express = express();
-const port = 3000;
+const port = 3004;
 
 app.listen(port, () => {
   console.log(`Listening at ${port}`);
