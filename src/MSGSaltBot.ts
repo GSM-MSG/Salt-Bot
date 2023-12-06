@@ -101,7 +101,11 @@ export class MSGSaltBot {
     await saltRepository.updateUsedSalt(author.id, usedSalt + saltCount);
 
     const receivedSalt = await saltRepository.getReceivedSalt(user.id);
-    await saltRepository.updateReceivedSalt(user.id, user.username, receivedSalt.count + saltCount);
+    await saltRepository.updateReceivedSalt(
+      user.id,
+      user.displayName,
+      receivedSalt.count + saltCount
+    );
     interaction.react("🧂");
 
     const remainSalt = maxSaltCount - usedSalt - saltCount;
