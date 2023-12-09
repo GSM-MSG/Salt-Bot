@@ -18,9 +18,10 @@ jobs:
           python-version: 3.11
 
       - name: Setup firebase admin json
-        run: |
-          touch msg-salty-firebase-adminsdk.json
-          echo "${{ secrets.FIREBASE_JSON }}" > msg-salty-firebase-adminsdk.json
+        uses: jsdaniell/create-json@1.1.2
+        with:
+          name: "msg-salty-firebase-adminsdk.json"
+          json: ${{ secrets.FIREBASE_JSON }}
 
       - name: Install system dependencies
         run: sudo apt-get update && sudo apt-get install -y build-essential libffi-dev
