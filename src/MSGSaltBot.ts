@@ -7,6 +7,7 @@ import MySaltCommand from "./commands/MySaltCommand";
 import SaltRankCommand from "./commands/SaltRankCommand";
 import HelpCommand from "./commands/HelpCommand";
 import DMCommand from "./commands/DMCommand";
+import SearchMSGMemberCommand from "./commands/SearchMSGMemberCommand";
 
 export class MSGSaltBot {
   private slashCommandMap = new Map<string, Command>();
@@ -37,7 +38,8 @@ export class MSGSaltBot {
       HelpCommand,
       MySaltCommand,
       SaltRankCommand,
-      DMCommand
+      DMCommand,
+      SearchMSGMemberCommand
     ];
 
     this.slashCommandMap = slashCommands.reduce((map, command) => {
