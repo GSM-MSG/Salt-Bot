@@ -9,8 +9,8 @@ export default {
   async execute(interaction: ChatInputCommandInteraction) {
     let receivedSaltRankList = await saltRepository.getReceivedSaltRankList();
     let result = "";
-    receivedSaltRankList = receivedSaltRankList.slice(0, 10);
     receivedSaltRankList.sort((lhs, rhs) => rhs.count - lhs.count);
+    receivedSaltRankList = receivedSaltRankList.slice(0, 10);
     receivedSaltRankList.forEach((salt, index) => {
       if (index == 0) {
         result = result.concat(`1️⃣등 **${salt.username}**\n${salt.count} 소금`);
