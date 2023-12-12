@@ -1,5 +1,8 @@
 name: Deploy Aws
-on: push
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   deploy_aws:
@@ -15,29 +18,6 @@ jobs:
           port: ${{ secrets.REMOTE_SSH_PORT }} # 접속포트
           script: | # 실행할 스크립트
             cd /home/ubuntu/Salt-bot
-            git pull origin main
-            pm2 kill
+            git pull origin master
             npm i --force
             npm run prod
-
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Setup python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.11
-
-      - name: Setup firebase admin json
-        uses: jsdaniell/create-json@1.1.2
-        with:
-          name: "msg-salty-firebase-adminsdk.json"
-          json: ${{ secrets.FIREBASE_JSON }}
-
-      - name: Install system dependencies
-        run: sudo apt-get update && sudo apt-get install -y build-essential libffi-dev
-
-      - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
