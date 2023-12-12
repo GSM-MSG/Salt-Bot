@@ -1,13 +1,14 @@
 import { Client, Events, Interaction, Message, REST, Routes } from "discord.js";
-import { config } from "./utils/config";
+import CurrentSalt from "./commands/CurrentSalt";
+import DMCommand from "./commands/DMCommand";
+import HelpCommand from "./commands/HelpCommand";
+import MySaltCommand from "./commands/MySaltCommand";
 import PingCommand from "./commands/PingCommand";
+import SaltRankCommand from "./commands/SaltRankCommand";
+import SearchMSGMemberCommand from "./commands/SearchMSGMemberCommand";
 import { Command } from "./interfaces/Command";
 import { saltRepository } from "./repositories/SaltRepository";
-import MySaltCommand from "./commands/MySaltCommand";
-import SaltRankCommand from "./commands/SaltRankCommand";
-import HelpCommand from "./commands/HelpCommand";
-import DMCommand from "./commands/DMCommand";
-import SearchMSGMemberCommand from "./commands/SearchMSGMemberCommand";
+import { config } from "./utils/config";
 
 export class MSGSaltBot {
   private slashCommandMap = new Map<string, Command>();
@@ -39,7 +40,8 @@ export class MSGSaltBot {
       MySaltCommand,
       SaltRankCommand,
       DMCommand,
-      SearchMSGMemberCommand
+      SearchMSGMemberCommand,
+      CurrentSalt
     ];
 
     this.slashCommandMap = slashCommands.reduce((map, command) => {
