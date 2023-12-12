@@ -20,5 +20,6 @@ jobs:
           key: ${{ secrets.REMOTE_PRIVATE_KEY }}
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
+            cd /home/ubuntu/salt-bot
             npm i --force
             npm run prod
