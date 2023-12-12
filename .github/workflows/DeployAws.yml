@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
       - name: excuting remote ssh commands
         uses: appleboy/ssh-action@v0.1.6
         with:
@@ -19,6 +22,3 @@ jobs:
           script: |
             npm i --force
             npm run prod
-
-      - name: Checkout repository
-        uses: actions/checkout@v2
