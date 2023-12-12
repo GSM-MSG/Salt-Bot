@@ -18,8 +18,7 @@ jobs:
             git pull origin main
             pm2 kill
             npm i --force
-            npm run build
-            pm2 start dist/main.js
+            npm run prod
 
       - name: Checkout repository
         uses: actions/checkout@v2
