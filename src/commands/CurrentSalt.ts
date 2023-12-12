@@ -7,8 +7,7 @@ export default {
     .setName("current")
     .setDescription("지금 남아있는 소금의 개수를 알려드려요!"),
   async execute(interaction: ChatInputCommandInteraction) {
-    const currentUser = await saltRepository.getReceivedSalt(interaction.user.id);
-    const currentSalt = await saltRepository.getUsedSalt(currentUser.userId)
+    const currentSalt = await saltRepository.getUsedSalt(interaction.user.id)
     await interaction.reply({
       content: `오늘은 소금을 ${10 - currentSalt}번 더 쓸 수 있어요!`
     });
