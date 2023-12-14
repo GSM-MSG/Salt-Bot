@@ -134,8 +134,5 @@ export class MSGSaltBot {
 > ${interaction.content}
 `
     });
-
-    const buriedSalt = saltRepository.getBuriedSalt(author.id);
-    saltRepository.updateBuriedSalt(author.id, await buriedSalt + (saltCount / 2));
   }
 }

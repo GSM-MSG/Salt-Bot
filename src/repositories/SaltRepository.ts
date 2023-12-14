@@ -60,21 +60,6 @@ class FirebaseSaltRepository implements SaltRepository {
     return data.count;
   }
 
-  async getBuriedSalt(userId: string): Promise<number> {
-      const docRef = doc(firestore, this.BuriedSaltKey, userId);
-      const snapshot = await getDoc(docRef);
-      if(!snapshot.exists()) return 0;
-      const data = snapshot.data();
-      return data.count;
-  }
-
-  async updateBuriedSalt(userId: string, count: number): Promise<void> {
-    await setDoc(doc(firestore, this.BuriedSaltKey, userId), {
-      count: count
-    })
-    return;
-  }
-
   async updateUsedSalt(userId: string, saltCount: number): Promise<void> {
     await setDoc(doc(firestore, this.usedSaltKey, userId), {
       count: saltCount
