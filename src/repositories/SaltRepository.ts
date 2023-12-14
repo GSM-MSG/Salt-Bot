@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 import { firestore } from "../firebase";
 
 interface Salt {
@@ -11,6 +11,8 @@ export interface SaltRepository {
   getReceivedSaltRankList(): Promise<Salt[]>;
   getReceivedSalt(userId: string): Promise<Salt>;
   getUsedSalt(userId: string): Promise<number>;
+  getBuriedSalt(userId: string): Promise<number>;
+  updateBuriedSalt(userId: string, count: number): Promise<void>;
   updateUsedSalt(userId: string, saltCount: number): Promise<void>;
   updateReceivedSalt(userId: string, username: string, saltCount: number): Promise<void>;
 }
@@ -18,6 +20,7 @@ export interface SaltRepository {
 class FirebaseSaltRepository implements SaltRepository {
   receivedSaltKey = "ReceivedSalt";
   usedSaltKey = "UsedSalt";
+  BuriedSaltKey = "BuriedSalt";
 
   async getReceivedSaltRankList(): Promise<Salt[]> {
     const snapshot = await getDocs(collection(firestore, this.receivedSaltKey));
@@ -55,6 +58,21 @@ class FirebaseSaltRepository implements SaltRepository {
     if (!snapshot.exists()) return 0;
     const data = snapshot.data();
     return data.count;
+  }
+
+  async getBuriedSalt(userId: string): Promise<number> {
+      const docRef = doc(firestore, this.BuriedSaltKey, userId);
+      const snapshot = await getDoc(docRef);
+      if(!snapshot.exists()) return 0;
+      const data = snapshot.data();
+      return data.count;
+  }
+
+  async updateBuriedSalt(userId: string, count: number): Promise<void> {
+    await setDoc(doc(firestore, this.BuriedSaltKey, userId), {
+      count: count
+    })
+    return;
   }
 
   async updateUsedSalt(userId: string, saltCount: number): Promise<void> {

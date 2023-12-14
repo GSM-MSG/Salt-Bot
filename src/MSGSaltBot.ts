@@ -117,7 +117,7 @@ export class MSGSaltBot {
     const remainSalt = maxSaltCount - usedSalt - saltCount;
     interaction.author.send({
       content: `
-🧂 \`${user.displayName}\`님에게 소금을 ${saltCount} 스푼 뿌렸어요! 
+🧂 \`${user.displayName}\`님에게 소금을 ${saltCount} 스푼 뿌렸어요!
 - 남은 소금 ${remainSalt}
 
 > ${author.displayName} :
@@ -134,5 +134,8 @@ export class MSGSaltBot {
 > ${interaction.content}
 `
     });
+
+    const buriedSalt = saltRepository.getBuriedSalt(author.id);
+    saltRepository.updateBuriedSalt(author.id, await buriedSalt + (saltCount / 2));
   }
 }
