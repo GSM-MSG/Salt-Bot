@@ -11,8 +11,6 @@ export interface SaltRepository {
   getReceivedSaltRankList(): Promise<Salt[]>;
   getReceivedSalt(userId: string): Promise<Salt>;
   getUsedSalt(userId: string): Promise<number>;
-  getBuriedSalt(userId: string): Promise<number>;
-  updateBuriedSalt(userId: string, count: number): Promise<void>;
   updateUsedSalt(userId: string, saltCount: number): Promise<void>;
   updateReceivedSalt(userId: string, username: string, saltCount: number): Promise<void>;
 }
