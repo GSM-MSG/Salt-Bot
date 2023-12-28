@@ -86,10 +86,11 @@ export default {
         filter: ({ user }) => user.id === interaction.user.id
       });
       let currentIndex = 0;
+      
       collector.on("collect", async (collectInteraction) => {
         collectInteraction.customId === prevID ? (currentIndex -= 10) : (currentIndex += 10);
         await collectInteraction.update({
-          content: `usernames: ${members.map((u) => `\`${u.user.username}\``).join(", ")}`,
+          content: `usernames: ${members.map((u) => `\`${u.user.username}\``).join(",")}`,
           embeds: [generateEmbed(currentIndex)],
           components: [
             new ActionRowBuilder<ButtonBuilder>({
@@ -101,6 +102,7 @@ export default {
           ]
         });
       });
+
     } catch (error) {
       await interaction.reply({
         content: `${error}`
