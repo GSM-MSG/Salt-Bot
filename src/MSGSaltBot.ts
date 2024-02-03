@@ -1,6 +1,7 @@
 import { Client, Events, Interaction, Message, REST, Routes } from "discord.js";
 import CurrentSaltCommand from "./commands/CurrentSaltCommand";
 import DMCommand from "./commands/DMCommand";
+import FilterMensionCommand from "./commands/FilterMensionCommand";
 import HelpCommand from "./commands/HelpCommand";
 import MySaltCommand from "./commands/MySaltCommand";
 import PingCommand from "./commands/PingCommand";
@@ -41,7 +42,8 @@ export class MSGSaltBot {
       SaltRankCommand,
       DMCommand,
       SearchMSGMemberCommand,
-      CurrentSaltCommand
+      CurrentSaltCommand,
+      FilterMensionCommand
     ];
 
     this.slashCommandMap = slashCommands.reduce((map, command) => {
