@@ -21,7 +21,7 @@ jobs:
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
             cd /home/ubuntu/salt-bot
-            git pull origin main
+            git pull origin master
             pm2 kill
             npm i --force
             npm run build
