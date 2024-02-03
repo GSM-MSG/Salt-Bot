@@ -18,19 +18,17 @@ export default {
 
   async execute(interaction: ChatInputCommandInteraction) {
     const firstRole = interaction.options.getRole('a')?.id ?? ''
-    const secondRole = interaction.options.getRole('b')?.id ?? ''
-    const thirdRole = interaction.options.getRole('c')?.id ?? ''
+    const secondRole = interaction.options.getRole('b')?.id
+    const thirdRole = interaction.options.getRole('c')?.id
 
-    const roleMembers = interaction.guild?.roles.cache.get(firstRole)?.members
-
-    const filteredMembers = roleMembers?.filter(member =>
-      member.roles.cache.has(secondRole) && member.roles.cache.has(thirdRole)
-    )
-    
-    const mentionedMembers = filteredMembers?.map(member => member.toString()).join(' ');
+    const roleMembers = interaction.guild?.members.cache.filter(member =>
+      member.roles.cache.has(firstRole) &&
+      (!secondRole || member.roles.cache.has(secondRole)) &&
+      (!thirdRole || member.roles.cache.has(thirdRole))
+    );
 
     await interaction.reply({
-      content: `${mentionedMembers}`
+      content: `${roleMembers?.map(member => member.toString()).join(' ')}`,
     });
   }
 } as Command;
