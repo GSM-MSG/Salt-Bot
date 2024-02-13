@@ -31,10 +31,12 @@ export default {
       )
     )
 
-    if(!roleMembers) return;
-
-    await interaction.reply({
-      content: `${roleMembers?.map((member: GuildMember) => member.toString()).join(' ')}`,
-    });
+    if(roleMembers){
+      await interaction.reply({
+        content: `${roleMembers?.map((member: GuildMember) => member.toString()).join(' ')}`,
+      });
+    } else {
+      await interaction.reply('해당 역할을 가진 멤버 목록을 불러오지 못했습니다.')
+    }
   }
 } as Command;
