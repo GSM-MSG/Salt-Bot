@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, Role, SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, GuildMember, Role, SlashCommandBuilder } from "discord.js";
 import { Command } from "../interfaces/Command";
 
 export default {
@@ -21,18 +21,20 @@ export default {
     const secondRole = interaction.options.getRole('b') as Role
     const thirdRole = interaction.options.getRole('c') as Role
 
-    const roleMembers = await interaction.guild?.members.fetch().then((members) =>
+    const members = await interaction.guild?.members;
+    
+    const roleMembers = await members?.fetch().then((members) =>
       members.filter((member) =>
         member.roles.cache.has(firstRole.id) &&
         (!secondRole || member.roles.cache.has(secondRole.id)) &&
         (!thirdRole || member.roles.cache.has(thirdRole.id))
       )
-    );
+    )
 
-    console.log(roleMembers?.map((member) => member.toString()).join(' '))
+    if(!roleMembers) return;
 
     await interaction.reply({
-      content: `${roleMembers?.map((member) => member.toString()).join(' ')}`,
+      content: `${roleMembers?.map((member: GuildMember) => member.toString()).join(' ')}`,
     });
   }
 } as Command;
