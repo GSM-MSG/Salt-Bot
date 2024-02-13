@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, Role, SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, GuildMember, Role, SlashCommandBuilder } from "discord.js";
 import { Command } from "../interfaces/Command";
 
 export default {
@@ -21,18 +21,22 @@ export default {
     const secondRole = interaction.options.getRole('b') as Role
     const thirdRole = interaction.options.getRole('c') as Role
 
-    const roleMembers = await interaction.guild?.members.fetch().then((members) =>
+    const members = await interaction.guild?.members;
+    
+    const roleMembers = await members?.fetch().then((members) =>
       members.filter((member) =>
         member.roles.cache.has(firstRole.id) &&
         (!secondRole || member.roles.cache.has(secondRole.id)) &&
         (!thirdRole || member.roles.cache.has(thirdRole.id))
       )
-    );
+    )
 
-    console.log(roleMembers?.map((member) => member.toString()).join(' '))
-
-    await interaction.reply({
-      content: `${roleMembers?.map((member) => member.toString()).join(' ')}`,
-    });
+    if(roleMembers){
+      await interaction.reply({
+        content: `${roleMembers?.map((member: GuildMember) => member.toString()).join(' ')}`,
+      });
+    } else {
+      await interaction.reply('해당 역할을 가진 멤버 목록을 불러오지 못했습니다.')
+    }
   }
 } as Command;
