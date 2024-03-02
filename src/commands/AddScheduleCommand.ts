@@ -120,7 +120,7 @@ export default {
     );
     const scheduleDateMessage = await textInput(
       "일정의 날짜를 입력해주세요!",
-      "[ yyyy/MM/dd HH:mm ] 포맷에 맞춰 입력해주세요!\n★★★★★★★★24시 포맷으로 시간을 정해주세요! (오후 3시 -> 15시)★★★★★★★★\n\ne.g. 2024/7/12 19:30 = 2024년 7월 12일 오후 7시 30분",
+      "[ yyyy/MM/dd HH:mm ] 포맷에 맞춰 입력해주세요!\n★★★★★★★★\n24시 포맷으로 시간을 정해주세요! (오후 3시 -> 15시)\n★★★★★★★★\n\ne.g. 2024/7/12 19:30 = 2024년 7월 12일 오후 7시 30분",
       scheduleInputThread
     );
     const parsedDateComponent = await parseDateTime(scheduleDateMessage.content);
