@@ -10,17 +10,19 @@ import SearchMSGMemberCommand from "./commands/SearchMSGMemberCommand";
 import { Command } from "./interfaces/Command";
 import { saltRepository } from "./repositories/SaltRepository";
 import { config } from "./utils/config";
+import { JobService } from "./services/JobService";
 
 export class MSGSaltBot {
   private slashCommandMap = new Map<string, Command>();
 
-  public constructor(private readonly client: Client) {
+  public constructor(private readonly client: Client, private readonly jobService: JobService) {
     this.client.login(config.discordToken);
 
     this.client.on("ready", () => {
       console.log(`${this.client.user?.username ?? ""} ready!`);
 
       this.registerSlashCommands();
+      this.startJob();
     });
 
     this.client.on("warn", (info) => console.log(info));
@@ -54,6 +56,10 @@ export class MSGSaltBot {
     await discordREST.put(Routes.applicationCommands(this.client.user?.id ?? ""), {
       body: slashCommands.map((command) => command.data.toJSON())
     });
+  }
+
+  private async startJob() {
+    await this.jobService.start();
   }
 
   private async onInteractionReceived() {
