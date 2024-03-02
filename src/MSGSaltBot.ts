@@ -11,6 +11,10 @@ import { Command } from "./interfaces/Command";
 import { saltRepository } from "./repositories/SaltRepository";
 import { config } from "./utils/config";
 import { JobService } from "./services/JobService";
+import AddScheduleCommand from "./commands/AddScheduleCommand";
+import SyncScheduleCommand from "./commands/SyncScheduleCommand";
+import FetchScheduleListCommand from "./commands/FetchScheduleListCommand";
+import DeleteScheduleCommand from "./commands/DeleteScheduleCommand";
 
 export class MSGSaltBot {
   private slashCommandMap = new Map<string, Command>();
@@ -45,7 +49,11 @@ export class MSGSaltBot {
       DMCommand,
       SearchMSGMemberCommand,
       CurrentSaltCommand,
-      FilterMensionCommand
+      FilterMensionCommand,
+      AddScheduleCommand,
+      SyncScheduleCommand,
+      FetchScheduleListCommand,
+      DeleteScheduleCommand
     ];
 
     this.slashCommandMap = slashCommands.reduce((map, command) => {
@@ -75,9 +83,15 @@ export class MSGSaltBot {
       } catch (error: any) {
         console.error(error);
 
-        await interaction.reply({
-          content: error.toString()
-        });
+        if (interaction.replied) {
+          await interaction.followUp({
+            content: error.toString()
+          });
+        } else {
+          await interaction.reply({
+            content: error.toString()
+          });
+        }
       }
     });
   }
