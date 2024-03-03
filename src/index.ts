@@ -6,12 +6,14 @@ import { Job } from "./interfaces/Job";
 import { ReminderSchedulerJob } from "./jobs/ReminderSchedulerJob";
 import { scheduleRepository } from "./repositories/ScheduleRepository";
 import { SchedulerJob } from "./jobs/SchedulerJob";
+import { TodayScheduleJob } from "./jobs/TodayScheduleJob";
 
-scheduleRepository.syncRemote()
+scheduleRepository.syncRemote();
 
 const jobs: Job[] = [
   new ReminderSchedulerJob(client),
-  new SchedulerJob(client)
+  new SchedulerJob(client),
+  new TodayScheduleJob(client)
 ];
 
 const jobService = new JobService(jobs);
