@@ -34,6 +34,7 @@ class DefaultScheduleRepository implements ScheduleRepository {
 
   async syncRemote(): Promise<void> {
     const snapshot = await getDocs(collection(firestore, this.scheduleKey));
+    this.cachedSchedule.clear();
     snapshot.docs.forEach((doc) => {
       const data = doc.data();
       const schedule = {
@@ -52,7 +53,6 @@ class DefaultScheduleRepository implements ScheduleRepository {
         isRepeat: data.isRepeat,
         repeatPattern: data.repeatPattern
       };
-      this.cachedSchedule.clear();
       this.cachedSchedule.set(doc.id, schedule);
     });
   }
