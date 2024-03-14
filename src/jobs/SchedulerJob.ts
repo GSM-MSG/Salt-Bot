@@ -101,7 +101,7 @@ ${schedule.content}
   async callUserButton(scheduleMessage: Message<boolean>, schedule: Schedule): Promise<void> {
     const userSelectCollector = scheduleMessage.createMessageComponentCollector({
       componentType: ComponentType.UserSelect,
-      time: 60_000 * 5 // 5분
+      time: 60_000 * 15 // 15분
     });
     userSelectCollector.on("collect", async (collectInteraction) => {
       const selectedUser = collectInteraction.users.first();
