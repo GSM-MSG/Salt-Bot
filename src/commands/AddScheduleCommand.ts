@@ -31,7 +31,7 @@ export default {
 
         const inputMessage = await thread.awaitMessages({
           max: 1,
-          time: 60_000, // 60초
+          time: 60_000 * 5, // 60초
           filter: (msg) => msg.author.id == interaction.user.id,
           errors: ["time"]
         });
