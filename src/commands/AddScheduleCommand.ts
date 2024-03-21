@@ -10,6 +10,7 @@ import { Schedule } from "../models/Schedule";
 import { scheduleRepository } from "../repositories/ScheduleRepository";
 import { v4 as uuidv4 } from "uuid";
 import { FormatUtils } from "../utils/FormatUtils";
+import dayjs from "dayjs"
 
 export default {
   data: new SlashCommandBuilder().setName("add-schedule").setDescription("새로운 일정을 추가해요!"),
@@ -50,32 +51,16 @@ export default {
       }
     };
     const parseDateTime = async (input: string) => {
-      const [date, time] = input.split(" ");
+      const dateTime = dayjs(input)
+      const dateToInt = (format: string) => parseInt(dateTime.format(format));
 
-      if (!date || !time) {
-        await interaction.channel?.send({
-          content: "포맷이 올바르지 않아요. 'yyyy/MM/dd HH:mm'의 형식대로 다시 입력해주세요."
-        });
-        throw new Error("포맷이 올바르지 않아요. 'yyyy/MM/dd HH:mm'의 형식대로 다시 입력해주세요.");
+      return {
+        year: dateToInt("YYYY") ?? new Date().getFullYear(),
+        month: dateToInt("MM"),
+        day: dateToInt("D"),
+        hour: dateToInt("HH"),
+        minute: dateToInt("mm")
       }
-
-      const [year, month, day] = date.split("/").map(Number);
-      const [hour, minute] = time.split(":").map(Number);
-
-      if (
-        [year, month, day, hour, minute].some(isNaN) ||
-        month > 12 ||
-        day > 31 ||
-        hour > 60 ||
-        minute > 60
-      ) {
-        await interaction.channel?.send({
-          content: "숫자가 올바르지 않아요. 올바른 숫자로 다시 시도해주세요."
-        });
-        throw new Error("숫자가 올바르지 않아요. 올바른 숫자로 다시 시도해주세요.");
-      }
-
-      return { year, month, day, hour, minute };
     };
     const parseChannel = async (message: Message<boolean>) => {
       const mentiondChannel = message.mentions.channels.first();
