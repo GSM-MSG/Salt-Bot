@@ -10,8 +10,7 @@ import { Schedule } from "../models/Schedule";
 import { scheduleRepository } from "../repositories/ScheduleRepository";
 import { v4 as uuidv4 } from "uuid";
 import { FormatUtils } from "../utils/FormatUtils";
-import dayjs, { Dayjs } from "dayjs"
-import { DateTime } from "luxon";
+import dayjs from "dayjs"
 
 export default {
   data: new SlashCommandBuilder().setName("add-schedule").setDescription("새로운 일정을 추가해요!"),
@@ -58,7 +57,7 @@ export default {
       return {
         year: dateToInt("YYYY") ?? new Date().getFullYear(),
         month: dateToInt("MM"),
-        day: dateToInt("DD"),
+        day: dateToInt("D"),
         hour: dateToInt("HH"),
         minute: dateToInt("mm")
       }
