@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import {
   AnyThreadChannel,
   ChatInputCommandInteraction,
@@ -5,12 +6,11 @@ import {
   Message,
   SlashCommandBuilder
 } from "discord.js";
+import { v4 as uuidv4 } from "uuid";
 import { Command } from "../interfaces/Command";
 import { Schedule } from "../models/Schedule";
 import { scheduleRepository } from "../repositories/ScheduleRepository";
-import { v4 as uuidv4 } from "uuid";
 import { FormatUtils } from "../utils/FormatUtils";
-import dayjs from "dayjs"
 
 export default {
   data: new SlashCommandBuilder().setName("add-schedule").setDescription("새로운 일정을 추가해요!"),
@@ -105,7 +105,7 @@ export default {
     );
     const scheduleDateMessage = await textInput(
       "일정의 날짜를 입력해주세요!",
-      "[ yyyy/MM/dd HH:mm ] 포맷에 맞춰 입력해주세요!\n★★★★★★★★\n24시 포맷으로 시간을 정해주세요! (오후 3시 -> 15시)\n★★★★★★★★\n\ne.g. 2024/7/12 19:30 = 2024년 7월 12일 오후 7시 30분",
+      "[ MM-DD HH:mm ] 또는 [ YYYY-MM-DD HH:mm ] 포맷에 맞춰 입력해주세요!\n★★★★★★★★\n24시 포맷으로 시간을 정해주세요! (오후 3시 -> 15시)\n★★★★★★★★\n\ne.g. 7-12 19:30 = 2024년 7월 12일 오후 7시 30분",
       scheduleInputThread
     );
     const parsedDateComponent = await parseDateTime(scheduleDateMessage.content);
