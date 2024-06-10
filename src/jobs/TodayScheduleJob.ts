@@ -1,4 +1,4 @@
-import { Client, EmbedBuilder } from "discord.js";
+import { Client, EmbedBuilder, TextChannel } from "discord.js";
 import { Job } from "../interfaces/Job";
 import { scheduleRepository } from "../repositories/ScheduleRepository";
 import { DateTime } from "luxon";
@@ -23,6 +23,13 @@ export class TodayScheduleJob extends Job {
     for (const schedule of todaySchedules) {
       const guild = await this.client.guilds.fetch(schedule.guildID);
 
+      const channel: TextChannel = (await this.client.channels.fetch(
+        schedule.channelID
+      )) as TextChannel;
+      await channel.send({
+        content: `## 📅 오늘 \`${schedule.title}\` 일정이 있어요! 다들 준비해주세요!\n\n새로운 스케쥴은 \`/add-schedule\`로 생성할 수 있어요!`
+      });
+
       for (const userID of schedule.userIDs) {
         const member = await guild.members.fetch(userID);
         if (member.user.bot) continue;
@@ -33,7 +40,7 @@ export class TodayScheduleJob extends Job {
           .setDescription(schedule.content);
 
         await member.user.send({
-          content: "오늘 일정을 보내드려요!",
+          content: "오늘 일정을 보내드려요, 꼭 잊지말고 참여해주세요!",
           embeds: [embed]
         });
       }
