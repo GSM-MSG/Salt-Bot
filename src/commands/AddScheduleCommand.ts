@@ -51,16 +51,16 @@ export default {
       }
     };
     const parseDateTime = async (input: string) => {
-      const dateTime = dayjs(input)
+      const dateTime = dayjs(input);
       const dateToInt = (format: string) => parseInt(dateTime.format(format));
 
       return {
-        year: dateToInt("YYYY") ?? new Date().getFullYear(),
+        year: dateToInt("YYYY") == 2001 ? new Date().getFullYear() : dateToInt("YYYY"),
         month: dateToInt("MM"),
         day: dateToInt("D"),
         hour: dateToInt("HH"),
         minute: dateToInt("mm")
-      }
+      };
     };
     const parseChannel = async (message: Message<boolean>) => {
       const mentiondChannel = message.mentions.channels.first();
