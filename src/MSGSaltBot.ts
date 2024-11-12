@@ -1,20 +1,21 @@
 import { Client, Events, Interaction, Message, REST, Routes } from "discord.js";
+import AddScheduleCommand from "./commands/AddScheduleCommand";
+import ChatToDocumentCommand from "./commands/ChatToDocumentCommand";
 import CurrentSaltCommand from "./commands/CurrentSaltCommand";
+import DeleteScheduleCommand from "./commands/DeleteScheduleCommand";
 import DMCommand from "./commands/DMCommand";
+import FetchScheduleListCommand from "./commands/FetchScheduleListCommand";
 import FilterMensionCommand from "./commands/FilterMensionCommand";
 import HelpCommand from "./commands/HelpCommand";
 import MySaltCommand from "./commands/MySaltCommand";
 import PingCommand from "./commands/PingCommand";
 import SaltRankCommand from "./commands/SaltRankCommand";
 import SearchMSGMemberCommand from "./commands/SearchMSGMemberCommand";
+import SyncScheduleCommand from "./commands/SyncScheduleCommand";
 import { Command } from "./interfaces/Command";
 import { saltRepository } from "./repositories/SaltRepository";
-import { config } from "./utils/config";
 import { JobService } from "./services/JobService";
-import AddScheduleCommand from "./commands/AddScheduleCommand";
-import SyncScheduleCommand from "./commands/SyncScheduleCommand";
-import FetchScheduleListCommand from "./commands/FetchScheduleListCommand";
-import DeleteScheduleCommand from "./commands/DeleteScheduleCommand";
+import { config } from "./utils/config";
 
 export class MSGSaltBot {
   private slashCommandMap = new Map<string, Command>();
@@ -42,18 +43,19 @@ export class MSGSaltBot {
   private async registerSlashCommands() {
     const discordREST = new REST({ version: "10" }).setToken(config.discordToken);
     const slashCommands: Array<Command> = [
+      DMCommand,
       PingCommand,
       HelpCommand,
       MySaltCommand,
       SaltRankCommand,
-      DMCommand,
-      SearchMSGMemberCommand,
-      CurrentSaltCommand,
-      FilterMensionCommand,
       AddScheduleCommand,
+      CurrentSaltCommand,
       SyncScheduleCommand,
+      FilterMensionCommand,
+      DeleteScheduleCommand,
+      SearchMSGMemberCommand,
       FetchScheduleListCommand,
-      DeleteScheduleCommand
+      ChatToDocumentCommand
     ];
 
     this.slashCommandMap = slashCommands.reduce((map, command) => {
